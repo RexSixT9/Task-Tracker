@@ -64,15 +64,17 @@
       function displayTask() {
         const data = JSON.parse(localStorage.getItem("tasks"));
         const result = document.getElementById("result");
-        data.map((elem) => {
-          result.innerHTML = `
+        data.forEach((elem) => {
+          child = `
             <p>${elem.title}</p>
             <p>${elem.desc}</p>
           `;
+
+          re
+          
         });
       }
       displayTask();
-      
     </script>
   </body>
 </html>
