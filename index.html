@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Tracker</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-slate-300">
+    <div class="container p-4">
+      <div
+        class="max-w-md p-4 flex flex-col bg-white rounded-md justify-center mx-auto mt-6"
+      >
+        <h1 class="text-center text-2xl font-bold mb-5 text-slate-600">
+          Task Tracker
+        </h1>
+        <input
+          type="text"
+          id="title"
+          placeholder="Title"
+          class="px-2 py-3 w-full border border-slate-400 mb-5 rounded-md"
+        />
+        <input
+          type="text"
+          id="desc"
+          placeholder="Description"
+          class="px-2 py-3 w-full border border-slate-400 mb-5 rounded-md"
+        />
+        <button
+          type="submit"
+          onclick="addTask()"
+          class="bg-blue-500 text-white rounded-md px-2 py-3 font-bold"
+        >
+          Add Tasks
+        </button>
+
+        <div class="bg-white mt-6">
+          <div id="result" class="bg-slate-300 px-2 py-3 rounded"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let tasks = [];
+      tasks = localStorage.getItem("tasks") || [];
+
+      function addTask() {
+        const title = document.getElementById("title").value.trim();
+        const desc = document.getElementById("desc").value.trim();
+
+        if (!title || !desc) {
+          alert("Values Required.");
+        } else {
+          const data = {
+            title: title,
+            desc: desc,
+          };
+          tasks.push(data);
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+      }
+
+      function displayTask() {
+        const data = JSON.parse(localStorage.getItem("tasks"));
+        const result = document.getElementById("result");
+        data.map((elem) => {
+          result.innerHTML = `
+            <p>${elem.title}</p>
+            <p>${elem.desc}</p>
+          `;
+        });
+      }
+      displayTask();
+      
+    </script>
+  </body>
+</html>
