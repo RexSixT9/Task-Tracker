@@ -42,8 +42,7 @@
     </div>
 
     <script>
-      let tasks = [];
-      tasks = localStorage.getItem("tasks") || [];
+      let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
       function addTask() {
         const title = document.getElementById("title").value.trim();
@@ -58,20 +57,30 @@
           };
           tasks.push(data);
           localStorage.setItem("tasks", JSON.stringify(tasks));
+          document.getElementById("title").value = "";
+          document.getElementById("desc").value = "";
+          displayTask();
         }
       }
 
       function displayTask() {
-        const data = JSON.parse(localStorage.getItem("tasks"));
         const result = document.getElementById("result");
-        data.forEach((elem) => {
-          child = `
-            <p>${elem.title}</p>
-            <p>${elem.desc}</p>
-          `;
+        result.innerHTML = "";
 
-          
-          
+        tasks.forEach((elem) => {
+          const child = document.createElement("div");
+          child.className = "bg-white rounded-md p-3 mb-2";
+
+          const title = document.createElement("p");
+          title.className = "font-bold text-slate-700";
+          title.textContent = elem.title;
+
+          const desc = document.createElement("p");
+          desc.className = "text-slate-600";
+          desc.textContent = elem.desc;
+
+          child.append(title, desc);
+          result.appendChild(child);
         });
       }
       displayTask();
